@@ -10,6 +10,10 @@
                     <br>
                     <p>输入文字，然后导出。就这么简单，快去试试吧！</p>
                     <br>
+                    <h2>项目地址</h2>
+                    <br>
+                    <h3><el-link type="primary" class="github-link" href="https://github.com/Canyu-Liu/ObjectionBubbleGenerator">GitHub仓库</el-link></h3>
+                    <br>
                 </div>
                 <div class="popup-footer">
                     <el-button type="primary" @click="close">关闭</el-button>
@@ -130,7 +134,7 @@ export default {
     }
 }
 
-.bili-link:hover {
+.github-link:hover {
     background-color: transparent;
     /* 取消背景颜色变化 */
 }
