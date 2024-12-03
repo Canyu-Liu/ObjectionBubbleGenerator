@@ -22,7 +22,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 <style>
 @font-face {
     font-family: 'AlimamaDongFangDaKai';
-    src: url('@/../public/fonts/AlimamaDongFangDaKai-Regular.ttf') format('truetype');
+    src: url('/generate/fonts/AlimamaDongFangDaKai-Regular.ttf') format('truetype');
 }
 
 .custom-font {
