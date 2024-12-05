@@ -37,7 +37,6 @@ export const store = reactive({
   bubblesfonts: [
     { id: 1, name: '阿里妈妈东方大楷', url: '/generate/fonts/AlimamaDongFangDaKai-Regular.ttf' },
     { id: 2, name: '阿里妈妈刀隶体', url: '/generate/fonts/AlimamaDaoLiTi.ttf' },
-    {id: 3, name: '得意黑', url: '/generate/fonts/SmileySans-Oblique.ttf'},
   ],
   font_size: 500, // 默认字体大小
   // 新增文字间距属性
