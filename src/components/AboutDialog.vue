@@ -10,6 +10,12 @@
                     <br>
                     <p>输入文字，然后导出。就这么简单，快去试试吧！</p>
                     <br>
+                    <h2>帮助与反馈</h2>
+                    <br>
+                    <p>请查看此文档</p>
+                    <p><el-link type="primary" class="github-link" href="https://objection.yvfox.com/help/">帮助|自动异议</el-link></p>
+                    <p>或者在Github上创建Issues</p>
+                    <br>
                     <h2>项目地址</h2>
                     <br>
                     <h3><el-link type="primary" class="github-link" href="https://github.com/Canyu-Liu/ObjectionBubbleGenerator">GitHub仓库</el-link></h3>
@@ -23,40 +29,20 @@
     </transition>
 </template>
 
-<script>
-import { ref, watch } from 'vue';
-import { Share } from '@element-plus/icons-vue';
+<script setup>
+import { defineProps, defineEmits } from 'vue';
 
-export default {
-    name: 'ExportDialog',
-    components: {
-        Share
-    },
-    props: {
-        visible: {
-            type: Boolean,
-            default: false
-        }
-    },
-    setup(props, { emit }) {
-    
-        // 分享功能（示例）
-        const share = () => {
-            //复制到剪切板
-            navigator.clipboard.writeText(window.location.href);
-            alert('链接已复制到剪切板！');
-        };
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-        // 关闭对话框
-        const close = () => {
-            emit('close');
-        };
+const emit = defineEmits(['close']);
 
-        return {
-            close,
-            share
-        };
-    }
+const close = () => {
+  emit('close');
 };
 </script>
 

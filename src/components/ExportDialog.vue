@@ -12,7 +12,6 @@
                             <h3 v-else>导出完成！</h3>
                         </el-col>
                         <el-col :span="24">
-                            <!-- 进度条，自定义显示格式为整数 -->
                             <el-progress :percentage="progress" :format="formatPercentage" />
                         </el-col>
                         <el-col :span="24" class="share-section">
@@ -42,13 +41,6 @@
                                 </p>
                             </el-link>
                         </el-col>
-                        <!-- <el-col :span="24">
-                            <el-link type="primary" class="bili-link" href="https://space.bilibili.com/380054694" target="_blank">
-                                <p>请我喝杯奶茶( •̀ ω •́ )✧
-                                    <el-icon class="svg-icon"><Coffee /></el-icon>
-                                </p>
-                            </el-link>
-                        </el-col> -->
                     </el-row>
                 </div>
                 <div class="popup-footer">
@@ -59,88 +51,77 @@
     </transition>
 </template>
 
-<script>
+<script setup>
 import { ref, watch } from 'vue';
 import { Share } from '@element-plus/icons-vue';
 
-export default {
-    name: 'ExportDialog',
-    components: {
-        Share
-    },
-    props: {
-        visible: {
-            type: Boolean,
-            default: false
+// 定义 props
+const props = defineProps({
+    visible: {
+        type: Boolean,
+        default: false
+    }
+});
+
+// 定义 emits
+const emit = defineEmits(['close', 'start-export']);
+
+// 定义响应式数据
+const progress = ref(0);
+const interval = ref(null);
+const isComplete = ref(false);
+
+// 自定义格式函数，返回整数百分比
+const formatPercentage = (percentage) => {
+    return `${Math.round(percentage)}%`;
+};
+
+// 分享功能
+const share = () => {
+    // 复制到剪切板
+    navigator.clipboard.writeText(window.location.href);
+    alert('链接已复制到剪切板！');
+};
+
+// 进度条
+const startProgress = () => {
+    progress.value = 0;
+    isComplete.value = false;
+    const totalDuration = 2000; // 总时长2秒
+    const intervalTime = 100; // 每100ms增加一次
+    const steps = totalDuration / intervalTime; // 总步数
+    const increment = 100 / steps; // 每步增加的百分比
+
+    interval.value = setInterval(() => {
+        if (progress.value < 100) {
+            progress.value += increment;
+            if (progress.value >= 100) {
+                progress.value = 100;
+                isComplete.value = true;
+                clearInterval(interval.value);
+                emit('start-export'); // 进度完成后触发导出事件（其实导出根本不需要等）
+            }
         }
-    },
-    setup(props, { emit }) {
-        const progress = ref(0);
-        const interval = ref(null);
-        const isComplete = ref(false);
+    }, intervalTime);
+};
 
-        // 自定义格式函数，返回整数百分比
-        const formatPercentage = (percentage) => {
-            return `${Math.round(percentage)}%`;
-        };
+const close = () => {
+    emit('close');
+};
 
-        // 分享功能（示例）
-        const share = () => {
-            //复制到剪切板
-            navigator.clipboard.writeText(window.location.href);
-            alert('链接已复制到剪切板！');
-        };
-
-        // 开始进度条
-        const startProgress = () => {
+// 监听 visible 状态变化
+watch(
+    () => props.visible,
+    (newVal) => {
+        if (newVal) {
+            startProgress();
+        } else {
+            clearInterval(interval.value);
             progress.value = 0;
             isComplete.value = false;
-            const totalDuration = 2000; // 总时长3秒
-            const intervalTime = 100; // 每100ms增加一次
-            const steps = totalDuration / intervalTime; // 总步数
-            const increment = 100 / steps; // 每步增加的百分比
-
-            interval.value = setInterval(() => {
-                if (progress.value < 100) {
-                    progress.value += increment;
-                    if (progress.value >= 100) {
-                        progress.value = 100;
-                        isComplete.value = true;
-                        clearInterval(interval.value);
-                        emit('start-export'); // 进度完成后触发导出事件
-                    }
-                }
-            }, intervalTime);
-        };
-
-        // 关闭对话框
-        const close = () => {
-            emit('close');
-        };
-
-        // 监听 visible 状态变化
-        watch(
-            () => props.visible,
-            (newVal) => {
-                if (newVal) {
-                    startProgress();
-                } else {
-                    clearInterval(interval.value);
-                    progress.value = 0;
-                    isComplete.value = false;
-                }
-            }
-        );
-
-        return {
-            progress,
-            close,
-            isComplete,
-            formatPercentage,
-            share
-        };
+        }
     }
-};
+);
 </script>
 
 <style scoped>
