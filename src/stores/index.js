@@ -3,19 +3,19 @@ import { reactive } from 'vue';
 
 export const store = reactive({
   //气泡样式
-  bubbles_style: '/generate/bubbles.png',
+  bubbles_style: import.meta.env.BASE_URL +'bubbles.png',
   setBubbles_style(url) {
     this.bubbles_style = url;
   },
   //气泡图片
   bubbles_images: [
-    { id: 1, name: '逆转裁判', url: '/generate/bubbles.png' },
-    { id: 2, name: '大逆转裁判', url: '/generate/bubbles2.png' },
+    { id: 1, name: '逆转裁判', url: import.meta.env.BASE_URL +'bubbles.png' },
+    { id: 2, name: '大逆转裁判', url: import.meta.env.BASE_URL +'bubbles2.png' },
   ],
   //气泡文字
   bubbles_text: '',
   //气泡文字的字体样式
-  bubblesfontstyle: '/generate/fonts/AlimamaDongFangDaKai-Regular.ttf',
+  bubblesfontstyle: import.meta.env.BASE_URL +'fonts/AlimamaDongFangDaKai-Regular.ttf',
   //气泡文字的颜色
   bubbles_text_color: 'rgb(251, 0, 2)',
   //描边开关
@@ -35,8 +35,9 @@ export const store = reactive({
   text_positiony: 0,
   // 字体列表
   bubblesfonts: [
-    { id: 1, name: '阿里妈妈东方大楷', url: '/generate/fonts/AlimamaDongFangDaKai-Regular.ttf' },
-    { id: 2, name: '阿里妈妈刀隶体', url: '/generate/fonts/AlimamaDaoLiTi.ttf' },
+    { id: 1, name: '阿里妈妈东方大楷', url: import.meta.env.BASE_URL +'fonts/AlimamaDongFangDaKai-Regular.ttf' },
+    { id: 2, name: '阿里妈妈刀隶体', url: import.meta.env.BASE_URL +'fonts/AlimamaDaoLiTi.ttf' },
+    { id: 3, name: '字体家Ai造字剑客', url: import.meta.env.BASE_URL +'fonts/ZitijiaAiZaoZiJianKe.ttf' },
   ],
   font_size: 500, // 默认字体大小
   // 新增文字间距属性

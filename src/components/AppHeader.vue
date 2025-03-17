@@ -11,20 +11,27 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
+import { store } from '@/stores/index.js'
 
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
     // console.log(key, keyPath);
 }
+
+onMounted(() => {
+    const style = document.createElement('style')
+    style.innerHTML = `
+        @font-face {
+            font-family: 'AlimamaDongFangDaKai';
+            src: url('${store.bubblesfontstyle}') format('truetype');
+        }
+    `
+    document.head.appendChild(style)
+})
 </script>
 
 <style>
-@font-face {
-    font-family: 'AlimamaDongFangDaKai';
-    src: url('/generate/fonts/AlimamaDongFangDaKai-Regular.ttf') format('truetype');
-}
-
 .custom-font {
     margin-left: 5px;
     font-family: 'AlimamaDongFangDaKai', sans-serif;
